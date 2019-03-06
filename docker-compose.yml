@@ -1,0 +1,26 @@
+version: '3'
+services:
+  mysql:
+    image: mariadb:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+      - MYSQL_DATABASE=bookmedik
+    volumes:
+      - /var/tarea1/database:/var/lib/mysql
+    container_name: bd
+
+  bookmedik:
+    image: sergiogo96/bookmedik
+    ports:
+      - 80:80
+    environment:
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+      - MYSQL_DATABASE=bookmedik
+    volumes:
+      - vol-servidor:/var/log/apache2
+    links:
+      - mysql
+container_name: php
